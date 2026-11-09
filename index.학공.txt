@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어 문법 듣기 연습</title>
+<style>
+  body { font-family: 'Malgun Gothic', dotum, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; display: flex; flex-direction: column; height: 100vh; }
+  header { background-color: #2c3e50; color: white; padding: 15px 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .container { display: flex; flex: 1; overflow: hidden; }
+  .sidebar { width: 250px; background-color: #fff; border-right: 1px solid #ddd; overflow-y: auto; padding: 20px; }
+  .sidebar h2 { font-size: 1.1em; color: #34495e; margin-bottom: 15px; }
+  .unit-btn { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 5px; text-align: left; cursor: pointer; transition: background-color 0.2s; font-size: 0.9em; }
+  .unit-btn:hover { background-color: #e0e6ed; }
+  .unit-btn.active { background-color: #3498db; color: white; border-color: #2980b9; }
+  .content { flex: 1; padding: 30px; overflow-y: auto; background-color: #f9fbfb; }
+  .dialogue-section { display: none; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+  .dialogue-section.active { display: block; }
+  h3 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0; }
+  .custom-audio-player { display: flex; align-items: center; background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin: 20px 0; }
+  .play-btn { background-color: #3498db; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 16px; margin-right: 15px; outline: none; }
+  .play-btn:hover { background-color: #2980b9; }
+  .progress-container { flex: 1; height: 8px; background-color: #bdc3c7; border-radius: 4px; cursor: pointer; position: relative; }
+  .progress-bar { height: 100%; background-color: #3498db; border-radius: 4px; width: 0%; pointer-events: none; }
+  .time-display { font-size: 0.85em; color: #7f8c8d; margin-left: 15px; min-width: 80px; text-align: right; }
+  .transcript { margin-top: 20px; line-height: 1.8; }
+  .line { margin-bottom: 15px; padding: 10px; border-radius: 5px; background-color: #fafafa; border-left: 4px solid #ecf0f1; }
+  .speaker { font-weight: bold; color: #e67e22; margin-right: 5px; }
+  .korean { font-size: 1.1em; color: #333; }
+  .english { display: block; font-size: 0.9em; color: #7f8c8d; margin-top: 5px; }
+  .highlight { color: #2980b9; font-weight: bold; background-color: #e8f4f8; padding: 2px 4px; border-radius: 3px; }
+  @media (max-width: 768px) {
+    .container { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid #ddd; padding: 15px; box-sizing: border-box; }
+    .content { padding: 15px; }
+  }
+</style>
+</head>
+<body>
+<header><h1>한국어 문법 듣기 연습</h1></header>
+<div class="container">
+  <div class="sidebar">
+    <h2>Select Part</h2>
+    <button class="unit-btn active" onclick="showPart('part1-1')">1-1. 높임 종결어미 & 특수어휘 (안부 인사)</button>
+    <button class="unit-btn" onclick="showPart('part1-2')">1-2. 높임 종결어미 & 특수어휘 (새해 인사)</button>
+    <button class="unit-btn" onclick="showPart('part2-1')">2-1. 간접높임 (선생님과 학생)</button>
+    <button class="unit-btn" onclick="showPart('part2-2')">2-2. 간접높임 (팀장과 팀원)</button>
+  </div>
+  <div class="content">
+    <div id="part1-1" class="dialogue-section active">
+      <h3>Part 1-1: 특수어휘 (Special Vocabulary) - 일상 안부</h3>
+      <div class="custom-audio-player">
+        <audio id="audio-part1-1" src="Part1.m4a"></audio>
+        <button class="play-btn" onclick="togglePlay('part1-1')">▶</button>
+        <div class="progress-container" onclick="setProgress(event, 'part1-1')"><div class="progress-bar" id="progress-part1-1"></div></div>
+        <div class="time-display"><span id="current-part1-1">0:00</span> / <span id="duration-part1-1">0:00</span></div>
+      </div>
+      <div class="transcript">
+        <div class="line"><span class="speaker">A:</span> <span class="korean">안녕하세요.</span><span class="english">Hello.</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">반갑습니다.</span><span class="english">Nice to meet you.</span></div>
+        <div class="line"><span class="speaker">A:</span> <span class="korean">어머니께서는 잘 <span class="highlight">계시나요?</span></span><span class="english">Is your mother doing well? (Honorific for 'is/staying')</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">요즘 들어 <span class="highlight">편찮으셔서</span> 마음이 안 좋네요.</span><span class="english">She has been sick lately, so I feel sad. (Honorific for 'sick')</span></div>
+        <div class="line"><span class="speaker">A:</span> <span class="korean">빨리 나으시길 바라요.</span><span class="english">I hope she gets well soon.</span></div>
+      </div>
+    </div>
+    <div id="part1-2" class="dialogue-section">
+      <h3>Part 1-2: 특수어휘 (Special Vocabulary) - 새해 인사</h3>
+      <div class="custom-audio-player">
+        <audio id="audio-part1-2" src="Part2.m4a"></audio>
+        <button class="play-btn" onclick="togglePlay('part1-2')">▶</button>
+        <div class="progress-container" onclick="setProgress(event, 'part1-2')"><div class="progress-bar" id="progress-part1-2"></div></div>
+        <div class="time-display"><span id="current-part1-2">0:00</span> / <span id="duration-part1-2">0:00</span></div>
+      </div>
+      <div class="transcript">
+        <div class="line"><span class="speaker">A:</span> <span class="korean">할아버지 새해 복 많이 받으세요.</span><span class="english">Grandpa, Happy New Year.</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">고맙구나, 너도 복 많이 받으렴.</span><span class="english">Thank you, I wish you good luck too.</span></div>
+        <div class="line"><span class="speaker">A:</span> <span class="korean">감사합니다, 할아버지 건강하세요.</span><span class="english">Thank you, please stay healthy, grandpa.</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">오냐, 여기 세뱃돈이다.</span><span class="english">Alright, here is your New Year's money.</span></div>
+      </div>
+    </div>
+    <div id="part2-1" class="dialogue-section">
+      <h3>Part 2-1: 간접높임 (Indirect Honorifics) - 선생님과 학생</h3>
+      <div class="custom-audio-player">
+        <audio id="audio-part2-1" src="Part3.m4a"></audio>
+        <button class="play-btn" onclick="togglePlay('part2-1')">▶</button>
+        <div class="progress-container" onclick="setProgress(event, 'part2-1')"><div class="progress-bar" id="progress-part2-1"></div></div>
+        <div class="time-display"><span id="current-part2-1">0:00</span> / <span id="duration-part2-1">0:00</span></div>
+      </div>
+      <div class="transcript">
+        <div class="line"><span class="speaker">A:</span> <span class="korean">선생님, 오늘 입으신 코트가 정말 <span class="highlight">멋지세요!</span></span><span class="english">Teacher, the coat you are wearing today is really cool!</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">그래? 고마워. 오늘 날씨가 좀 쌀쌀해서 입어봤어.</span><span class="english">Really? Thanks. The weather is a bit chilly today so I put it on.</span></div>
+        <div class="line"><span class="speaker">A:</span> <span class="korean">색상도 잘 <span class="highlight">어울리시고</span>, 오늘따라 목소리도 참 <span class="highlight">좋으십니다.</span></span><span class="english">The color suits you well, and your voice sounds really good today.</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">하하, 고마워. 기분 좋게 수업 시작할 수 있겠네!</span><span class="english">Haha, thanks. I can start the class in a good mood!</span></div>
+      </div>
+    </div>
+    <div id="part2-2" class="dialogue-section">
+      <h3>Part 2-2: 간접높임 (Indirect Honorifics) - 팀장과 팀원</h3>
+      <div class="custom-audio-player">
+        <audio id="audio-part2-2" src="Part4.m4a"></audio>
+        <button class="play-btn" onclick="togglePlay('part2-2')">▶</button>
+        <div class="progress-container" onclick="setProgress(event, 'part2-2')"><div class="progress-bar" id="progress-part2-2"></div></div>
+        <div class="time-display"><span id="current-part2-2">0:00</span> / <span id="duration-part2-2">0:00</span></div>
+      </div>
+      <div class="transcript">
+        <div class="line"><span class="speaker">A:</span> <span class="korean">팀장님, 아까 회의 때 하신 말씀이 정말 <span class="highlight">맞으십니다.</span> 저도 같은 생각입니다.</span><span class="english">Team leader, what you said during the meeting earlier is absolutely right. I think so too.</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">다행이네. 팀원들이 동의해 주니 추진력이 생기겠어.</span><span class="english">That's a relief. Since the team members agree, we'll have momentum.</span></div>
+        <div class="line"><span class="speaker">A:</span> <span class="korean">혹시 오늘 오후에 잠시 시간이 <span class="highlight">있으신가요?</span> 세부 일정을 논의하고 싶습니다.</span><span class="english">Do you happen to have some time this afternoon? I'd like to discuss the detailed schedule.</span></div>
+        <div class="line"><span class="speaker">B:</span> <span class="korean">응, 3시 이후에는 괜찮으니까 그때 자리로 오게.</span><span class="english">Yes, anytime after 3 is fine, so come to my desk then.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function showPart(partId) {
+    document.querySelectorAll('audio').forEach(audio => {
+      audio.pause();
+      const part = audio.id.replace('audio-', '');
+      const btn = document.querySelector(`#${part} .play-btn`);
+      if(btn) btn.innerText = '▶';
+    });
+    document.querySelectorAll('.dialogue-section').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.unit-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(partId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+  function togglePlay(partId) {
+    const audio = document.getElementById(`audio-${partId}`);
+    const btn = document.querySelector(`#${partId} .play-btn`);
+    if (audio.paused) {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          btn.innerText = '⏸';
+        }).catch(error => {
+          console.warn("오디오 파일을 로드할 수 없거나 재생이 지원되지 않습니다:", error);
+          btn.innerText = '▶';
+        });
+      }
+    } else {
+      audio.pause();
+      btn.innerText = '▶';
+    }
+  }
+  function setProgress(e, partId) {
+    const progressContainer = document.querySelector(`#${partId} .progress-container`);
+    const audio = document.getElementById(`audio-${partId}`);
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+    if (duration) {
+      audio.currentTime = (clickX / width) * duration;
+    }
+  }
+  document.querySelectorAll('audio').forEach(audio => {
+    const partId = audio.id.replace('audio-', '');
+    const progressBar = document.getElementById(`progress-${partId}`);
+    const currentDisplay = document.getElementById(`current-${partId}`);
+    const durationDisplay = document.getElementById(`duration-${partId}`);
+    audio.addEventListener('loadedmetadata', () => { durationDisplay.innerText = formatTime(audio.duration); });
+    audio.addEventListener('timeupdate', () => {
+      if(audio.duration) {
+        progressBar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+        currentDisplay.innerText = formatTime(audio.currentTime);
+      }
+    });
+    audio.addEventListener('ended', () => { document.querySelector(`#${partId} .play-btn`).innerText = '▶'; });
+  });
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${min}:${sec < 10 ? '0' + sec : sec}`;
+  }
+</script>
+</body>
+</html>
